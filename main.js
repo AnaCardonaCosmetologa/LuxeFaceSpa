@@ -557,7 +557,7 @@ const testimonialsData = [
     alt: "Paciente en tratamiento facial"
   },
   {
-    name: "Sebastian",
+    name: "Sebastián",
     text: "“La verdad iba con nervios porque nunca me había hecho un tratamiento facial, pero fue demasiado relajante. Salí sintiendo la piel súper fresca y al otro día ya notaba mi cara más iluminada.”",
     src: "images/Paciente 2.jpeg",
     alt: "Paciente durante sesión de cuidado facial"
@@ -803,6 +803,7 @@ const renderServicesCatalog = () => {
 const renderTestimonials = () => {
   const container = document.getElementById("testimonials-track");
   if (!container) return;
+  container.innerHTML = "";
   testimonialsData.forEach((item) => {
     const card = document.createElement("article");
     card.className = "testimonial-card";
@@ -815,6 +816,7 @@ const renderTestimonials = () => {
     `;
     container.appendChild(card);
   });
+  container.scrollLeft = 0;
 };
 
 const initShowcaseCarousel = () => {

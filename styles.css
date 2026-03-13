@@ -905,15 +905,26 @@ h4 {
 @media (max-width: 640px) {
   .testimonials-track {
     grid-auto-flow: column;
-    grid-auto-columns: minmax(82%, 1fr);
+    grid-auto-columns: 100%;
     grid-template-columns: none;
+    justify-content: start;
+    max-width: none;
+    margin: 0;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
+    scroll-padding-inline-start: 0;
+    -webkit-overflow-scrolling: touch;
     padding-bottom: 0.35rem;
+    scrollbar-width: none;
+  }
+
+  .testimonials-track::-webkit-scrollbar {
+    display: none;
   }
 
   .testimonial-card {
     scroll-snap-align: start;
+    scroll-snap-stop: always;
     aspect-ratio: 4 / 5.2;
   }
 }
