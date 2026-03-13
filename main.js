@@ -570,24 +570,36 @@ const testimonialsData = [
   }
 ];
 
-const galleryData = [
-  {
-    src: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=600&q=80",
-    label: "Cabina"
-  },
-  {
-    src: "https://images.unsplash.com/photo-1591012911207-0db5e92690c8?auto=format&fit=crop&w=600&q=80",
-    label: "Aparatología"
-  },
-  {
-    src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
-    label: "Detalles"
-  },
-  {
-    src: "https://images.unsplash.com/photo-1502323777036-f29e3972d82f?auto=format&fit=crop&w=600&q=80",
-    label: "Ambiente"
-  }
-];
+const galleryCollections = {
+  aparatologia: [
+    {
+      src: "images/Aparatologia-AltaFrecuencia.jpeg",
+      label: "Alta frecuencia",
+      alt: "Equipo de alta frecuencia en cabina"
+    },
+    {
+      src: "images/Aparatologia-Dermapen.jpeg",
+      label: "Dermapen",
+      alt: "Dispositivo Dermapen para procedimientos faciales"
+    },
+    {
+      src: "images/Aparatologia-FotoDinamica.jpeg",
+      label: "Cámara fotodinámica",
+      alt: "Cámara fotodinámica utilizada en tratamientos faciales"
+    },
+    {
+      src: "images/Aparatologia-Skinscrubber.jpeg",
+      label: "Skin scrubber",
+      alt: "Skin scrubber para limpieza facial no invasiva"
+    },
+    {
+      src: "images/Aparatologia-VaporOzono.jpeg",
+      label: "Vapor ozono",
+      alt: "Equipo de vapor ozono en cabina estética"
+    }
+  ],
+  consultorio: []
+};
 
 const detailLabels = {
   aparatologia: "Aparatología",
@@ -785,18 +797,91 @@ const renderTestimonials = () => {
   });
 };
 
-const renderGallery = () => {
-  const container = document.getElementById("gallery-grid");
-  if (!container) return;
-  galleryData.forEach((item) => {
-    const figure = document.createElement("figure");
-    figure.className = "gallery-card";
-    figure.innerHTML = `
-      <img src="${item.src}" alt="${item.label}" loading="lazy" decoding="async" />
-      <span>${item.label}</span>
-    `;
-    container.appendChild(figure);
+const initShowcaseCarousel = () => {
+  const module = document.getElementById("showcase-module");
+  if (!module) return;
+
+  const tabs = Array.from(module.querySelectorAll(".showcase-tab"));
+  const arrows = Array.from(module.querySelectorAll(".showcase-arrow"));
+  const frame = document.getElementById("showcase-frame");
+  const image = document.getElementById("showcase-image");
+  const caption = document.getElementById("showcase-caption");
+  const dots = document.getElementById("showcase-dots");
+  const empty = document.getElementById("showcase-empty");
+
+  let activeCollection = "aparatologia";
+  let activeIndex = 0;
+
+  const currentItems = () => galleryCollections[activeCollection] ?? [];
+
+  const renderDots = (items) => {
+    if (!dots) return;
+    dots.innerHTML = "";
+    items.forEach((item, index) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.setAttribute("aria-label", `Ver imagen ${index + 1}: ${item.label}`);
+      dot.classList.toggle("active", index === activeIndex);
+      dot.addEventListener("click", () => {
+        activeIndex = index;
+        renderView();
+      });
+      dots.appendChild(dot);
+    });
+  };
+
+  const renderView = () => {
+    const items = currentItems();
+    const isEmpty = items.length === 0;
+
+    tabs.forEach((tab) => {
+      const isActive = tab.dataset.collection === activeCollection;
+      tab.classList.toggle("active", isActive);
+      tab.setAttribute("aria-pressed", String(isActive));
+    });
+
+    if (empty) empty.hidden = !isEmpty;
+    if (frame) frame.hidden = isEmpty;
+    arrows.forEach((button) => {
+      button.disabled = isEmpty;
+    });
+
+    if (isEmpty) {
+      if (dots) dots.innerHTML = "";
+      return;
+    }
+
+    const item = items[activeIndex];
+    if (image) {
+      image.src = item.src;
+      image.alt = item.alt;
+    }
+    if (caption) caption.textContent = item.label;
+
+    renderDots(items);
+  };
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const key = tab.dataset.collection;
+      if (!key || key === activeCollection) return;
+      activeCollection = key;
+      activeIndex = 0;
+      renderView();
+    });
   });
+
+  arrows.forEach((button) => {
+    button.addEventListener("click", () => {
+      const items = currentItems();
+      if (!items.length) return;
+      const isNext = button.dataset.action === "next";
+      activeIndex = (activeIndex + (isNext ? 1 : -1) + items.length) % items.length;
+      renderView();
+    });
+  });
+
+  renderView();
 };
 
 const initAccessibilityControls = () => {
@@ -850,7 +935,7 @@ const init = () => {
   renderPackages();
   renderServicesCatalog();
   renderTestimonials();
-  renderGallery();
+  initShowcaseCarousel();
   initAccessibilityControls();
   initNavigation();
   setYear();

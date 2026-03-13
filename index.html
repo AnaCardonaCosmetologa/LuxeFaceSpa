@@ -212,13 +212,55 @@
         <div class="testimonials-track" id="testimonials-track"></div>
       </section>
 
-      <section class="section gallery" id="galeria">
+      <section class="section showcase" id="galeria">
         <div class="section-heading">
-          <p class="eyebrow">Ambiente</p>
-          <h2>Galería visual</h2>
-          <p>Reemplaza estas imágenes libres por tus propias fotos o videos cortos.</p>
+          <p class="eyebrow">Tecnología y entorno</p>
+          <h2>Nuestro espacio y aparatología</h2>
+          <p>
+            Descubre parte del entorno de atención y la tecnología utilizada en nuestros
+            procedimientos no invasivos.
+          </p>
         </div>
-        <div class="gallery-grid" id="gallery-grid"></div>
+        <div class="showcase-module" id="showcase-module">
+          <div class="showcase-tabs" aria-label="Categorías de imágenes">
+            <button class="showcase-tab active" type="button" data-collection="aparatologia">
+              Aparatología
+            </button>
+            <button class="showcase-tab" type="button" data-collection="consultorio">
+              Consultorio
+            </button>
+          </div>
+          <div class="showcase-carousel">
+            <button
+              class="showcase-arrow"
+              type="button"
+              data-action="prev"
+              aria-label="Ver imagen anterior"
+            >
+              ‹
+            </button>
+            <figure class="showcase-frame" id="showcase-frame">
+              <img id="showcase-image" src="" alt="" loading="lazy" decoding="async" />
+              <figcaption>
+                <span class="showcase-caption" id="showcase-caption"></span>
+              </figcaption>
+            </figure>
+            <button
+              class="showcase-arrow"
+              type="button"
+              data-action="next"
+              aria-label="Ver imagen siguiente"
+            >
+              ›
+            </button>
+          </div>
+          <div class="showcase-meta">
+            <div class="showcase-dots" id="showcase-dots" aria-label="Indicadores de imagen"></div>
+            <p class="showcase-empty" id="showcase-empty" hidden>
+              Próximamente imágenes del espacio.
+            </p>
+          </div>
+        </div>
       </section>
 
       <section class="section contact" id="contacto">
