@@ -279,6 +279,44 @@ h4 {
   padding-bottom: clamp(2rem, 5vw, 3.5rem);
 }
 
+.feature-banner {
+  padding-top: clamp(1.25rem, 3vw, 2rem);
+  padding-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.feature-banner-card {
+  background: var(--brand-white);
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.06);
+  padding: clamp(0.8rem, 1.8vw, 1.15rem);
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.feature-banner-card img {
+  width: 100%;
+  aspect-ratio: 18 / 6;
+  max-height: 340px;
+  object-fit: cover;
+  border-radius: 18px;
+  display: block;
+}
+
+.feature-banner-footer {
+  margin-top: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.feature-banner-footer p {
+  margin: 0;
+  max-width: 52ch;
+}
+
 .intro-card {
   border-radius: 24px;
   padding: 2rem;
@@ -774,6 +812,20 @@ h4 {
 
   .profile-photo {
     max-width: 240px;
+  }
+
+  .feature-banner-card {
+    padding: 0.9rem;
+    max-width: 100%;
+  }
+
+  .feature-banner-footer {
+    margin-top: 0.7rem;
+  }
+
+  .feature-banner-card img {
+    aspect-ratio: 16 / 9;
+    max-height: none;
   }
 
   .hero-watermark {
