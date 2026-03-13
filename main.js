@@ -922,7 +922,7 @@ const initAccessibilityControls = () => {
     } catch {
       // Ignore localStorage failures and fall back.
     }
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    return "light";
   };
 
   applyTheme(getPreferredTheme());
