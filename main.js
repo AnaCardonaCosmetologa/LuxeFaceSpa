@@ -614,6 +614,16 @@ const detailLabels = {
 const defaultDetailKeys = ["aparatologia", "cuidadosPrevios", "candidatos", "contraindicaciones"];
 const THEME_STORAGE_KEY = "luxe-face-theme";
 
+const trackEvent = (eventName, params = {}) => {
+  try {
+    if (typeof window !== "undefined" && typeof window.gtag === "function") {
+      window.gtag("event", eventName, params);
+    }
+  } catch {
+    // Fail silently if analytics is unavailable.
+  }
+};
+
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
 const renderPackages = () => {
@@ -760,7 +770,16 @@ const renderServicesCatalog = () => {
     const details = document.createElement("details");
     details.className = "service-category";
     details.id = slugify(group.category);
+    details.dataset.categoryName = group.category;
     if (index === 0) details.open = true;
+
+    details.addEventListener("toggle", () => {
+      if (!details.open) return;
+      trackEvent("open_service_category", {
+        category_name: group.category,
+        location: "services_catalog"
+      });
+    });
 
     const summary = document.createElement("summary");
     summary.innerHTML = `
@@ -969,6 +988,48 @@ const initNavigation = () => {
   });
 };
 
+const initAnalyticsTracking = () => {
+  const getLocation = (element) => {
+    const section = element.closest("section[id]");
+    if (section) return section.id;
+    if (element.closest(".hero")) return "hero";
+    if (element.closest(".main-nav")) return "nav";
+    return "site";
+  };
+
+  const bindClickEvent = (selector, eventName, options = {}) => {
+    const elements = document.querySelectorAll(selector);
+    if (!elements.length) return;
+    elements.forEach((element) => {
+      element.addEventListener("click", () => {
+        const label = options.label ? options.label(element) : element.textContent?.trim();
+        const destination = element.getAttribute("href") || options.destination || "";
+        trackEvent(eventName, {
+          location: getLocation(element),
+          label: label || "",
+          destination
+        });
+      });
+    });
+  };
+
+  bindClickEvent('a[href*="wa.me"]', "click_whatsapp");
+  bindClickEvent('a[href*="instagram.com"]', "click_instagram");
+  bindClickEvent('.hero-cta .btn.ghost[href="servicios.html"]', "click_catalogo_interactivo", {
+    label: () => "Ver catálogo interactivo"
+  });
+  bindClickEvent('a[href="servicios.html#tratamientos"]', "click_novedad_destacada", {
+    label: () => "Conocer más"
+  });
+  bindClickEvent('a[href="servicios.html#limpiezas"], a[href="servicios.html#hidrataciones"], a[href="servicios.html#tratamientos"], a[href="servicios.html#spa"], a[href="servicios.html#post-quirurgico"], .services-chips .chip', "click_categoria_servicio");
+  bindClickEvent(".services-actions .btn.primary", "click_ver_todos_servicios", {
+    label: () => "Ver todos los servicios"
+  });
+  bindClickEvent('.profile-links .btn.primary[href*="wa.me"]', "click_reservar_diagnostico", {
+    label: () => "Reservar diagnóstico"
+  });
+};
+
 const setYear = () => {
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
@@ -981,6 +1042,7 @@ const init = () => {
   initShowcaseCarousel();
   initAccessibilityControls();
   initNavigation();
+  initAnalyticsTracking();
   setYear();
 };
 
