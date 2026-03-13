@@ -29,9 +29,199 @@ body {
   overflow-x: hidden;
 }
 
-body.high-contrast {
-  background-color: #111;
-  color: #f7f7f7;
+body.dark-mode {
+  background-color: #14141a;
+  color: #f3eef2;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4 {
+  color: #f8f4f6;
+}
+
+body.dark-mode .accessibility-panel {
+  background: #1b1b23;
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+body.dark-mode .accessibility-panel button {
+  background: #2a2935;
+  color: #f3eef2;
+}
+
+body.dark-mode .hero {
+  background: linear-gradient(135deg, #352c33 0%, #2b252f 45%, #372d34 100%);
+}
+
+body.dark-mode .hero-watermark {
+  color: #f8f4f6;
+  opacity: 0.05;
+}
+
+body.dark-mode .feature-banner-card,
+body.dark-mode .intro-card,
+body.dark-mode .package-card,
+body.dark-mode .service-card,
+body.dark-mode .service-preview-card,
+body.dark-mode .testimonial-card,
+body.dark-mode .showcase-module {
+  background: #20202a;
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode .service-category {
+  background: #2a2431;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+body.dark-mode .service-price-single,
+body.dark-mode .service-price-sub,
+body.dark-mode .service-price-left,
+body.dark-mode .service-category-count,
+body.dark-mode .section-heading p,
+body.dark-mode .feature-banner-footer p,
+body.dark-mode .showcase-empty {
+  color: rgba(243, 238, 242, 0.82);
+}
+
+body.dark-mode .service-price-row {
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+body.dark-mode .btn.ghost {
+  border-color: #f3eef2;
+  color: #f3eef2;
+}
+
+body.dark-mode .tag,
+body.dark-mode .price-chip,
+body.dark-mode .showcase-tab.active {
+  background: #f3eef2;
+  color: #1b1b23;
+}
+
+body.dark-mode .showcase-tab {
+  background: #2a2935;
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #f3eef2;
+}
+
+body.dark-mode .showcase-frame {
+  background: #17171f;
+}
+
+body.dark-mode .showcase-arrow {
+  background: #2a2935;
+  color: #f3eef2;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+body.dark-mode .showcase-dots button {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+body.dark-mode .showcase-dots button.active {
+  background: #f3eef2;
+}
+
+body.dark-mode .profile {
+  background: linear-gradient(140deg, #2a2431 0%, #241f2b 100%);
+}
+
+body.dark-mode .profile .btn.primary {
+  background: #f3eef2;
+  color: #1b1b23;
+}
+
+body.dark-mode .profile .btn.ghost {
+  border-color: rgba(243, 238, 242, 0.85);
+  color: #f3eef2;
+}
+
+body.dark-mode .services-chips .chip {
+  background: #2b2934;
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #f3eef2;
+}
+
+body.dark-mode .service-category summary {
+  color: #f3eef2;
+}
+
+body.dark-mode .service-category[open] summary {
+  border-bottom-color: rgba(255, 255, 255, 0.14);
+}
+
+body.dark-mode .service-category .service-card {
+  background: #1d1a24;
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.34);
+}
+
+body.dark-mode .service-card details {
+  border-top-color: rgba(255, 255, 255, 0.14);
+}
+
+body.dark-mode .detail-grid > div {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 0.75rem 0.8rem;
+}
+
+body.dark-mode .detail-grid h4 {
+  color: #f7f3f5;
+}
+
+body.dark-mode .contact {
+  background: #0f1015;
+  color: #f3eef2;
+}
+
+body.dark-mode .contact-card,
+body.dark-mode .map-placeholder {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+body.dark-mode .map-frame {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+body.dark-mode .site-footer {
+  background: #0f1015;
+  color: #f3eef2;
+}
+
+body.dark-mode .main-nav a {
+  color: #f3eef2;
+}
+
+body.dark-mode .nav-toggle span {
+  background: #f3eef2;
+}
+
+@media (max-width: 880px) {
+  body.dark-mode .main-nav ul {
+    background: #20202a;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+  }
+}
+
+body.dark-mode .main-nav a:focus-visible,
+body.dark-mode .btn:focus-visible,
+body.dark-mode .nav-toggle:focus-visible,
+body.dark-mode .whatsapp-fab:focus-visible,
+body.dark-mode .chip:focus-visible,
+body.dark-mode .card-cta:focus-visible,
+body.dark-mode .service-category summary:focus-visible,
+body.dark-mode .showcase-tab:focus-visible,
+body.dark-mode .showcase-arrow:focus-visible,
+body.dark-mode .showcase-dots button:focus-visible {
+  outline-color: #f3eef2;
 }
 
 img {
@@ -94,6 +284,11 @@ a {
 
 .accessibility-panel button:hover {
   opacity: 0.85;
+}
+
+.accessibility-panel button.is-active {
+  background: var(--brand-black);
+  color: var(--brand-white);
 }
 
 .hero {
@@ -637,17 +832,18 @@ h4 {
 
 .testimonials-track {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 330px));
+  justify-content: center;
+  gap: 0.8rem;
+  max-width: 1040px;
+  margin: 0 auto;
 }
 
 .testimonial-card {
   position: relative;
   overflow: hidden;
-  max-width: 320px;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 5;
   width: 100%;
-  padding: 1.5rem;
   background: var(--brand-white);
   border-radius: 20px;
   border: 1px solid rgba(0, 0, 0, 0.05);
@@ -663,24 +859,63 @@ h4 {
 
 .testimonial-overlay {
   position: absolute;
-  left: 0.75rem;
-  right: 0.75rem;
-  bottom: 0.75rem;
-  padding: 0.85rem 1rem;
-  background: rgba(0, 0, 0, 0.55);
+  left: 0.6rem;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  padding: 0.75rem 0.85rem;
+  background: linear-gradient(180deg, rgba(18, 18, 24, 0.1), rgba(18, 18, 24, 0.72));
   color: var(--brand-white);
   border-radius: 14px;
   display: grid;
-  gap: 0.35rem;
+  gap: 0.25rem;
 }
 
-.testimonial-overlay p {
+.testimonial-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.testimonial-quote {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
 }
 
-.testimonial-overlay strong {
-  font-weight: 600;
+.testimonials .section-heading {
+  max-width: 860px;
+  margin-bottom: 1.75rem;
+}
+
+.testimonials .section-heading h2 {
+  font-size: clamp(2rem, 4.5vw, 2.8rem);
+}
+
+.testimonials .section-heading p {
+  max-width: 62ch;
+}
+
+@media (max-width: 920px) {
+  .testimonials-track {
+    grid-template-columns: repeat(2, minmax(0, 320px));
+  }
+}
+
+@media (max-width: 640px) {
+  .testimonials-track {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(82%, 1fr);
+    grid-template-columns: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.35rem;
+  }
+
+  .testimonial-card {
+    scroll-snap-align: start;
+    aspect-ratio: 4 / 5.2;
+  }
 }
 
 .showcase-module {
@@ -762,9 +997,7 @@ h4 {
 }
 
 .showcase-frame figcaption {
-  position: absolute;
-  left: 0.75rem;
-  bottom: 0.75rem;
+  display: none;
 }
 
 .showcase-caption {
@@ -830,14 +1063,28 @@ h4 {
 
 .map-placeholder {
   border-radius: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  align-content: start;
+  gap: 0.8rem;
   background: rgba(255, 255, 255, 0.08);
-  text-align: center;
   padding: 1.5rem;
   min-height: 260px;
+}
+
+.map-frame {
+  min-height: 260px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.map-frame iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  border: 0;
+  display: block;
 }
 
 .site-footer {

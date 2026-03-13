@@ -551,20 +551,20 @@ const servicesData = [
 
 const testimonialsData = [
   {
-    name: "Cliente 1",
-    text: "“Próximamente reseñas de nuestros clientes.”",
+    name: "Andrea",
+    text: "“Yo tenía varias manchitas y la piel un poco opaca por el estrés, y este tratamiento me ayudó muchísimo. Mi cara se ve más pareja, descansada... hasta me dijeron que parecía que había dormido mejor.”",
     src: "images/Paciente 1.jpeg",
     alt: "Paciente en tratamiento facial"
   },
   {
-    name: "Cliente 2",
-    text: "“Próximamente reseñas de nuestros clientes.”",
+    name: "Sebastian",
+    text: "“La verdad iba con nervios porque nunca me había hecho un tratamiento facial, pero fue demasiado relajante. Salí sintiendo la piel súper fresca y al otro día ya notaba mi cara más iluminada.”",
     src: "images/Paciente 2.jpeg",
     alt: "Paciente durante sesión de cuidado facial"
   },
   {
-    name: "Cliente 3",
-    text: "“Próximamente reseñas de nuestros clientes.”",
+    name: "Carlos",
+    text: "“Me gustó mucho porque no fue nada doloroso y me iban explicando cada paso. Sentí la piel más suavecita desde el primer momento y el efecto se ve muy natural, justo como quería.”",
     src: "images/Paciente 3.jpeg",
     alt: "Paciente en cabina recibiendo tratamiento"
   }
@@ -612,6 +612,7 @@ const detailLabels = {
 };
 
 const defaultDetailKeys = ["aparatologia", "cuidadosPrevios", "candidatos", "contraindicaciones"];
+const THEME_STORAGE_KEY = "luxe-face-theme";
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
@@ -789,8 +790,8 @@ const renderTestimonials = () => {
     card.innerHTML = `
       <img src="${item.src}" alt="${item.alt}" loading="lazy" decoding="async" />
       <div class="testimonial-overlay">
-        <p>${item.text}</p>
-        <strong>${item.name}</strong>
+        <strong class="testimonial-name">${item.name}</strong>
+        <p class="testimonial-quote">${item.text}</p>
       </div>
     `;
     container.appendChild(card);
@@ -813,6 +814,7 @@ const initShowcaseCarousel = () => {
   let activeIndex = 0;
 
   const currentItems = () => galleryCollections[activeCollection] ?? [];
+  const hasItems = (key) => (galleryCollections[key] ?? []).length > 0;
 
   const renderDots = (items) => {
     if (!dots) return;
@@ -835,6 +837,9 @@ const initShowcaseCarousel = () => {
     const isEmpty = items.length === 0;
 
     tabs.forEach((tab) => {
+      const key = tab.dataset.collection;
+      const available = key ? hasItems(key) : false;
+      tab.hidden = !available;
       const isActive = tab.dataset.collection === activeCollection;
       tab.classList.toggle("active", isActive);
       tab.setAttribute("aria-pressed", String(isActive));
@@ -864,7 +869,7 @@ const initShowcaseCarousel = () => {
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
       const key = tab.dataset.collection;
-      if (!key || key === activeCollection) return;
+      if (!key || key === activeCollection || !hasItems(key)) return;
       activeCollection = key;
       activeIndex = 0;
       renderView();
@@ -881,14 +886,46 @@ const initShowcaseCarousel = () => {
     });
   });
 
+  if (!hasItems(activeCollection)) {
+    const firstAvailable = Object.keys(galleryCollections).find((key) => hasItems(key));
+    if (firstAvailable) activeCollection = firstAvailable;
+  }
+
   renderView();
 };
 
 const initAccessibilityControls = () => {
   const doc = document.documentElement;
   let scale = 1;
+  const body = document.body;
 
   const buttons = document.querySelectorAll(".accessibility-panel button");
+  const themeButton = document.querySelector('[data-action="theme-toggle"]');
+
+  const applyTheme = (theme) => {
+    const isDark = theme === "dark";
+    body.classList.toggle("dark-mode", isDark);
+    if (themeButton) {
+      themeButton.classList.toggle("is-active", isDark);
+      themeButton.setAttribute("aria-pressed", String(isDark));
+      themeButton.setAttribute(
+        "aria-label",
+        isDark ? "Desactivar modo oscuro" : "Activar modo oscuro"
+      );
+    }
+  };
+
+  const getPreferredTheme = () => {
+    try {
+      const saved = localStorage.getItem(THEME_STORAGE_KEY);
+      if (saved === "dark" || saved === "light") return saved;
+    } catch {
+      // Ignore localStorage failures and fall back.
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  };
+
+  applyTheme(getPreferredTheme());
 
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -899,8 +936,14 @@ const initAccessibilityControls = () => {
       } else if (action === "font-decrease") {
         scale = clamp(scale - 0.05, 0.85, 1.25);
         doc.style.setProperty("--font-scale", scale.toFixed(2));
-      } else if (action === "contrast-toggle") {
-        document.body.classList.toggle("high-contrast");
+      } else if (action === "theme-toggle") {
+        const nextTheme = body.classList.contains("dark-mode") ? "light" : "dark";
+        applyTheme(nextTheme);
+        try {
+          localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+        } catch {
+          // Ignore localStorage failures without breaking UX.
+        }
       }
     });
   });
